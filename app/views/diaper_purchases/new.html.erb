@@ -1,0 +1,45 @@
+<% content_for :title, "Registrar compra · Cacacounter" %>
+
+<h2>Registrar compra de pañales</h2>
+
+<div class="card">
+  <% if @diaper_purchase.errors.any? %>
+    <div class="error-box">
+      <% @diaper_purchase.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form_with model: @diaper_purchase, url: diaper_purchases_path do |f| %>
+    <div class="field">
+      <%= f.label :size, "Talla" %>
+      <%= f.select :size, DiaperSize::OPTIONS, { include_blank: "Selecciona una talla" }, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :quantity, "Cantidad de pañales" %>
+      <%= f.number_field :quantity, min: 1, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :purchased_at, "Fecha de compra" %>
+      <%= f.date_field :purchased_at, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :brand, "Marca (opcional)" %>
+      <%= f.text_field :brand %>
+    </div>
+
+    <div class="field">
+      <%= f.label :notes, "Notas (opcional)" %>
+      <%= f.text_area :notes, rows: 2 %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Guardar", class: "btn btn-cyan" %>
+      <%= link_to "Cancelar", root_path, class: "btn" %>
+    </div>
+  <% end %>
+</div>

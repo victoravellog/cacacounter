@@ -1,0 +1,35 @@
+<% content_for :title, "Registrar cambio · Cacacounter" %>
+
+<h2>Registrar cambio de pañal</h2>
+
+<div class="card">
+  <% if @diaper_change.errors.any? %>
+    <div class="error-box">
+      <% @diaper_change.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form_with model: @diaper_change, url: diaper_changes_path do |f| %>
+    <div class="field">
+      <%= f.label :size, "Talla" %>
+      <%= f.select :size, DiaperSize::OPTIONS, { include_blank: "Selecciona una talla" }, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :occurred_at, "Fecha y hora" %>
+      <%= f.datetime_field :occurred_at, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :notes, "Notas (opcional)" %>
+      <%= f.text_area :notes, rows: 2 %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Guardar", class: "btn btn-primary" %>
+      <%= link_to "Cancelar", root_path, class: "btn" %>
+    </div>
+  <% end %>
+</div>

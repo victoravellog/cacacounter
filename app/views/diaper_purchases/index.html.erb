@@ -1,0 +1,24 @@
+<% content_for :title, "Compras · Cacacounter" %>
+
+<h2>Compras registradas</h2>
+
+<p><%= link_to "+ Registrar compra", new_diaper_purchase_path, class: "btn btn-cyan" %></p>
+
+<% if @diaper_purchases.any? %>
+  <ul class="entry-list">
+    <% @diaper_purchases.each do |purchase| %>
+      <li>
+        <div>
+          <span class="tag"><%= purchase.size %></span>
+          <span class="when"><%= purchase.quantity %> unidades · <%= purchase.purchased_at.strftime("%d/%m/%Y") %></span>
+          <% if purchase.brand.present? %>
+            <div class="notes"><%= purchase.brand %></div>
+          <% end %>
+        </div>
+        <%= button_to "Borrar", diaper_purchase_path(purchase), method: :delete, class: "btn btn-sm btn-danger", form: { data: { turbo_confirm: "¿Eliminar esta compra?" } } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty-state">Sin compras registradas todavía.</div>
+<% end %>

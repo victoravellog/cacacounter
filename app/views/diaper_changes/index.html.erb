@@ -1,0 +1,24 @@
+<% content_for :title, "Historial · Cacacounter" %>
+
+<h2>Historial de cambios</h2>
+
+<p><%= link_to "+ Registrar cambio", new_diaper_change_path, class: "btn btn-primary" %></p>
+
+<% if @diaper_changes.any? %>
+  <ul class="entry-list">
+    <% @diaper_changes.each do |change| %>
+      <li>
+        <div>
+          <span class="tag"><%= change.size %></span>
+          <span class="when"><%= change.occurred_at.strftime("%d/%m/%Y %H:%M") %></span>
+          <% if change.notes.present? %>
+            <div class="notes"><%= change.notes %></div>
+          <% end %>
+        </div>
+        <%= button_to "Borrar", diaper_change_path(change), method: :delete, class: "btn btn-sm btn-danger", form: { data: { turbo_confirm: "¿Eliminar este registro?" } } %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty-state">Sin registros todavía.</div>
+<% end %>
