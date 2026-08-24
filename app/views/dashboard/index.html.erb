@@ -1,4 +1,26 @@
-<% content_for :title, "Cacacounter 💩" %>
+<% content_for :title, "El Pañalómetro de Violeta 💜" %>
+
+<% if total_diapers_changed > 0 %>
+  <div class="stats-banner">
+    <div class="stat-card">
+      <div class="number"><%= total_diapers_changed %></div>
+      <div class="label">Pañales cambiados</div>
+      <% if diaper_milestone_message %>
+        <div class="milestone"><%= diaper_milestone_message %></div>
+      <% end %>
+    </div>
+    <% if violeta_days_old && violeta_days_old > 0 %>
+      <div class="stat-card">
+        <div class="number"><%= (total_diapers_changed.to_f / violeta_days_old).round(1) %></div>
+        <div class="label">Promedio diario</div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="encouragement">
+    <%= random_encouragement %>
+  </div>
+<% end %>
 
 <h2>Registrar cambio</h2>
 <div class="quick-log">
@@ -12,52 +34,9 @@
 <p><%= link_to "Registrar con hora/notas personalizadas →", new_diaper_change_path, class: "btn btn-sm" %></p>
 
 <h2>Stock disponible</h2>
-<% if @summaries.any? %>
-  <div class="stock-grid">
-    <% @summaries.each do |summary| %>
-      <div class="stock-card <%= "low" if summary.low_stock? %>">
-        <div class="size">Talla <%= summary.size %></div>
-        <div class="count"><%= summary.stock %></div>
-        <div class="meta">
-          <% if summary.avg_daily_usage.positive? %>
-            ~<%= summary.avg_daily_usage.round(1) %>/día
-            <% if summary.estimated_days_left %>
-              · quedan ~<%= summary.estimated_days_left %> días
-            <% end %>
-          <% else %>
-            sin uso reciente
-          <% end %>
-        </div>
-        <% if summary.low_stock? %>
-          <div class="warning">¡Comprar pronto!</div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <div class="empty-state">
-    Aún no hay datos. Registra una compra y un cambio de pañal para empezar a ver el stock.
-  </div>
-<% end %>
+<%= render "stock_grid", summaries: @summaries %>
 
 <p><%= link_to "+ Registrar compra de pañales", new_diaper_purchase_path, class: "btn btn-cyan" %></p>
 
 <h2>Actividad reciente</h2>
-<% if @recent_changes.any? %>
-  <ul class="entry-list">
-    <% @recent_changes.each do |change| %>
-      <li>
-        <div>
-          <span class="tag"><%= change.size %></span>
-          <span class="when"><%= change.occurred_at.strftime("%d/%m %H:%M") %></span>
-          <% if change.notes.present? %>
-            <div class="notes"><%= change.notes %></div>
-          <% end %>
-        </div>
-        <%= button_to "Borrar", diaper_change_path(change), method: :delete, class: "btn btn-sm btn-danger", form: { data: { turbo_confirm: "¿Eliminar este registro?" } } %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <div class="empty-state">Sin registros todavía.</div>
-<% end %>
+<%= render "recent_activity", recent_changes: @recent_changes %>

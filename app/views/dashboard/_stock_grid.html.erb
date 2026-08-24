@@ -1,0 +1,29 @@
+<%= turbo_frame_tag "stock_grid" do %>
+  <% if summaries.any? %>
+    <div class="stock-grid">
+      <% summaries.each do |summary| %>
+        <div class="stock-card <%= "low" if summary.low_stock? %>">
+          <div class="size">Talla <%= summary.size %></div>
+          <div class="count"><%= summary.stock %></div>
+          <div class="meta">
+            <% if summary.avg_daily_usage.positive? %>
+              ~<%= summary.avg_daily_usage.round(1) %>/día
+              <% if summary.estimated_days_left %>
+                · quedan ~<%= summary.estimated_days_left %> días
+              <% end %>
+            <% else %>
+              sin uso reciente
+            <% end %>
+          </div>
+          <% if summary.low_stock? %>
+            <div class="warning">¡Comprar pronto!</div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      Aún no hay datos. Registra una compra y un cambio de pañal para empezar a ver el stock.
+    </div>
+  <% end %>
+<% end %>

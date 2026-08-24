@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "recent_activity" do %>
+  <% if recent_changes.any? %>
+    <ul class="entry-list">
+      <% recent_changes.each do |change| %>
+        <li>
+          <div>
+            <span class="tag"><%= change.size %></span>
+            <span class="when"><%= change.occurred_at.strftime("%d/%m %H:%M") %></span>
+            <% if change.notes.present? %>
+              <div class="notes"><%= change.notes %></div>
+            <% end %>
+          </div>
+          <%= button_to "Borrar", diaper_change_path(change), method: :delete, class: "btn btn-sm btn-danger", form: { data: { turbo_confirm: "¿Eliminar este registro?" } } %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="empty-state">Sin registros todavía.</div>
+  <% end %>
+<% end %>

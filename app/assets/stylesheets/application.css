@@ -1,6 +1,5 @@
 /*
- * Cacacounter — estilo neobrutalista: bordes gruesos, sombras duras sin blur,
- * colores planos y saturados, cero sutileza.
+ * El Pañalómetro de Violeta — estilo neobrutalista con colores divertidos 💜
  */
 
 :root {
@@ -11,6 +10,8 @@
   --cyan: #4ecdc4;
   --coral: #ff5a5f;
   --green: #7ed957;
+  --violet: #9b5de5;
+  --lavender: #e0aaff;
   --shadow: 5px 5px 0 var(--ink);
   --shadow-sm: 3px 3px 0 var(--ink);
   --border: 3px solid var(--ink);
@@ -29,6 +30,70 @@ body {
   line-height: 1.4;
 }
 
+/* Night mode */
+
+html.night-mode-preload body,
+body.night-mode {
+  --paper: #1a1a2e;
+  --ink: #eee;
+  --shadow: 5px 5px 0 #000;
+  --shadow-sm: 3px 3px 0 #000;
+  --border: 3px solid #444;
+}
+
+html.night-mode-preload .card,
+html.night-mode-preload .entry-list li,
+html.night-mode-preload .empty-state,
+html.night-mode-preload input,
+html.night-mode-preload select,
+html.night-mode-preload textarea,
+body.night-mode .card,
+body.night-mode .entry-list li,
+body.night-mode .empty-state,
+body.night-mode input,
+body.night-mode select,
+body.night-mode textarea {
+  background: #2d2d44;
+  color: #eee;
+}
+
+html.night-mode-preload .btn,
+html.night-mode-preload .stock-card,
+html.night-mode-preload .stat-card,
+html.night-mode-preload .encouragement,
+html.night-mode-preload .flash,
+html.night-mode-preload .entry-list .tag,
+body.night-mode .btn,
+body.night-mode .stock-card,
+body.night-mode .stat-card,
+body.night-mode .encouragement,
+body.night-mode .flash,
+body.night-mode .entry-list .tag {
+  color: #111;
+}
+
+html.night-mode-preload .btn-violet,
+body.night-mode .btn-violet {
+  color: white;
+}
+
+html.night-mode-preload .stock-card.low,
+body.night-mode .stock-card.low {
+  background: #8b0000;
+  color: white;
+}
+
+html.night-mode-preload .stock-card .warning,
+body.night-mode .stock-card .warning {
+  background: #111;
+  color: var(--yellow);
+}
+
+html.night-mode-preload .site-header,
+body.night-mode .site-header {
+  border-color: #444;
+}
+
 .wrap {
   max-width: 720px;
   margin: 0 auto;
@@ -43,7 +108,7 @@ body {
   justify-content: space-between;
   gap: 12px;
   padding: 16px;
-  background: var(--yellow);
+  background: var(--violet);
   border-bottom: var(--border);
   flex-wrap: wrap;
 }
@@ -54,12 +119,51 @@ body {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.02em;
+  color: white;
+}
+
+.site-header h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header .subtitle {
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  margin-top: 4px;
 }
 
 .site-header nav {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.theme-toggle {
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,0.3);
+}
+
+.violet-flower {
+  display: inline-block;
+  margin-right: 6px;
 }
 
 /* Typography */
@@ -84,6 +188,57 @@ h2 {
   box-shadow: var(--shadow-sm);
   background: var(--green);
   font-weight: 700;
+}
+
+/* Encouragement banner */
+
+.encouragement {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: var(--lavender);
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Stats banner */
+
+.stats-banner {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 140px;
+  padding: 14px;
+  background: var(--yellow);
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.stat-card .number {
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.stat-card .label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.stat-card .milestone {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-top: 6px;
 }
 
 /* Buttons + links styled as buttons */
@@ -117,6 +272,7 @@ h2 {
 
 .btn-primary { background: var(--pink); }
 .btn-cyan { background: var(--cyan); }
+.btn-violet { background: var(--violet); color: white; }
 .btn-yellow { background: var(--yellow); }
 .btn-danger { background: var(--coral); }
 .btn-block { width: 100%; justify-content: center; }
@@ -185,18 +341,21 @@ h2 {
 /* Quick log buttons */
 
 .quick-log {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
 .quick-log .btn {
   flex-direction: column;
   padding: 14px 8px;
+  min-width: 70px;
 }
 
 .quick-log .btn .size {
   font-size: 1.2rem;
+  min-width: 2.5ch;
+  text-align: center;
 }
 
 /* Lists */
@@ -221,7 +380,7 @@ h2 {
 .entry-list .tag {
   display: inline-block;
   padding: 2px 8px;
-  background: var(--yellow);
+  background: var(--lavender);
   border: 2px solid var(--ink);
   font-weight: 800;
   font-size: 0.8rem;
@@ -263,7 +422,7 @@ input, select, textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-  outline: 3px solid var(--pink);
+  outline: 3px solid var(--violet);
   outline-offset: 0;
 }
 
@@ -289,4 +448,19 @@ input:focus, select:focus, textarea:focus {
   font-weight: 700;
   border: var(--border);
   background: white;
+}
+
+/* Turbo update animation */
+
+@keyframes flash-update {
+  0% { transform: scale(1.03); filter: brightness(1.15); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+.stock-card {
+  animation: flash-update 0.3s ease-out;
+}
+
+.entry-list li:first-child {
+  animation: flash-update 0.3s ease-out;
 }
